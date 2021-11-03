@@ -1,0 +1,179 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+    <style>
+        body{
+            margin-top: 100px;
+            font-family: 'Poppins', sans-serif;
+        }
+        #fh1{
+            margin-top: 20px;
+        }
+        #sub-nav{
+            display: flex;
+            justify-content: space-around;
+        }
+        #logout-btn{
+            background-color: rgb(50, 122, 255);
+        }
+        /* .list-question{
+            height: 400px;
+            background-color: rgb(255, 219, 173);
+        } */
+        #fh3{
+            text-align: center;
+            font-size: 30px;
+            padding-top: 20px;
+            text-align: left;
+        }
+        @media screen and (max-width: 600px) {
+            #fh3{
+                font-size: 17px;
+                text-align: left;
+            }
+        }
+        #fh6{
+            text-align: left;
+            font-size: 15px;
+            /* padding-top: 20px; */
+            padding-bottom: 20px;
+            font-weight: normal;
+        }
+        @media screen and (max-width: 600px) {
+            #fh6{
+                font-size: 15px;
+                text-align: left;
+                font-weight: normal;
+            }
+        }
+        #fh5{
+            display: flex;
+            justify-content: space-around;
+            text-align: left;
+            font-size: 13px;
+            padding-top: 3px;
+            width: 90px;
+            color: rgb(223, 223, 223);
+            height: 20px;
+            font-weight: normal;
+            background-color: rgb(158, 158, 158);
+            border-radius: 20px;
+            /* padding-top: 20px; */
+            /* background-color: blue; */
+        }
+        @media screen and (max-width: 600px) {
+            #fh5{
+                font-size: 10px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="sub-nav">
+            <!-- <h1 id="fh1">Hey Guys, Let's help :)</h1> -->
+            <!-- <button class="btn" id="logout-btn"><a id="fa" href="" style="color: white; text-decoration: none;">Ask Question</a></button> -->
+
+            <!-- <div style="margin-top: 55px;">
+                <button class="btn btn-primary" id="logout-btn"><a id="fa" href="" style="color: white; text-decoration: none;">Ask Question</a></button>
+            </div> -->
+        </div>
+        <div class="list-question">
+            <div class="questions">
+                <div class="container" style="background-color: rgba(255, 235, 209, 0.808); padding: 5px; box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 5px 0px; border-radius: 20px;" >
+                    <h3 id="fh3">{{question.title}}</h3>
+                    <hr>
+                    <h6 id="fh6">{{ question.content|safe }}</h6>
+                    <hr>
+                    <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">Asked By: <a href="{% url 'profile' %}">{{ object.user|title }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}</h6>
+                    <br>
+                        <form action="{% url 'stackbase:like_post' object.pk %}" method="POST">
+                            {% csrf_token %}
+                            {% if user.is_authenticated %}
+                                {% if liked %}
+                                    <div style="display: flex; align-items: center; margin-left: 10px;">
+                                        <button type="submit" name="question_id" value="{{ question.id }}" style="border: none; border-radius: 60px;"><img src="https://image.similarpng.com/very-thumbnail/2020/06/Dislike-icon-transparent-PNG.png" alt="" style="width: 40px;"></button> <h5 style="margin-left: 10px; cursor: pointer;"> |  {{ total_likes }} Likes</h5>
+                                    </div>
+                                {% else %}
+                                    <div style="display: flex; align-items: center; margin-left: 10px;">
+                                        <button type="submit" name="question_id" value="{{ question.id }}" style="border: none; border-radius: 30px;"><img src="https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png" alt="" style="width: 40px;"></button> <h5 style="margin-left: 10px; cursor: pointer;"> |  {{ total_likes }} Likes</h5>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <h5 style="margin-left: 10px; cursor: pointer;"><a href="{% url 'login' %}">Login</a> to Like Question |  {{ total_likes }} Likes</h5>
+                            {% endif %}
+
+                        </form>
+                    <br>
+                    <h2>Answers...</h2> <br><br><br>
+
+                    {% if not question.comment.all %}
+                        <h3>No Answers yet... <a href="">Answer Question</a> </h3>
+                    {% else %}
+                        {% for comment in question.comment.all %}
+                            <h3 style="font-weight: normal; font-size: 15px;">{{comment.content|safe}}</h3>
+                            <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.name}}</a> - On: {{comment.date_created|date:"j F, Y"}}</i></h3>
+                            <hr>  
+                        {% endfor %}
+                    {% endif %}
+
+
+
+                    <!-- {% if not questions.comments.all %}
+                        <h3>No Answers yet... <a href="">Answer Question</a> </h3>
+                    {% else %}
+
+                        {% for comment in questions.comments.all %}
+                            <h3 style="font-weight: normal; font-size: 15px;">{{comment.body|safe}}</h3>
+                            <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.name}}</a> - {{comment.date_added|date:"j F, Y"}}</i></h3>
+                            <hr>    
+                        {% endfor %}
+                    {% endif %}
+
+                    <br><br><br><br><br><br>
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                        {% if liked %}
+                            <div style="display: flex; align-items: center; margin-left: 10px;">
+                                <button type="submit" name="questions_id" value="{{ questions.id }}" style="border: none; border-radius: 60px;"><img src="https://image.similarpng.com/very-thumbnail/2020/06/Dislike-icon-transparent-PNG.png" alt="" style="width: 40px;"></button> <h5 style="margin-left: 10px; cursor: pointer;"> |  {{ total_likes }} Likes</h5>
+                            </div>
+                        {% else %}
+                            <div style="display: flex; align-items: center; margin-left: 10px;">
+                                <button type="submit" name="questions_id" value="{{ questions.id }}" style="border: none; border-radius: 30px;"><img src="https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png" alt="" style="width: 40px;"></button> <h5 style="margin-left: 10px; cursor: pointer;"> |  {{ total_likes }} Likes</h5>
+                            </div>
+                        {% endif %}
+                        {% else %}
+                            <h5 style="margin-left: 10px; cursor: pointer;"><a href="{% url 'login' %}">Login</a> to Like Question |  {{ total_likes }} Likes</h5>
+                        {% endif %}
+                    </form> -->
+                    
+                    <a class="btn btn-outline-primary" id="fa" href="{% url 'stackbase:question-comment' question.id %}" style="text-decoration: none;">Answer Question</a>
+                    <a style="text-decoration: none; " class="btn btn-outline-success" href="{% url 'stackbase:question-update' question.id %}">&#x270E;</a>
+                    <a style="text-decoration: none; " class="btn btn-outline-danger" href="{% url 'stackbase:question-delete' question.id %}">&#x2716;</a>
+                    <a style="text-decoration: none; " class="btn btn-outline-secondary" href="{% url 'stackbase:question-lists' %}">&#x21a9;</a>
+                </div> <br><br>
+                    <!-- Answer Section -->
+                
+                </div> <br>
+            </div>
+        </div>
+        <br>
+        
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script> -->
+</body>
+</html>
+{% endblock content %}

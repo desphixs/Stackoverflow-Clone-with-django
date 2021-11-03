@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+
+        <title>Logout Page</title>
+        <style>
+            body{
+                background: linear-gradient(230deg, orange 0%, yellow 100%);
+
+            }
+            .containerr{
+                margin-top: 100px;
+                margin-bottom: 130px;
+
+            }
+            #logoutid1{
+                text-align: center;
+                font-size: 30px;
+                color: rgb(0, 0, 0);
+                font-weight: 600;
+                font-family: 'Poppins', sans-serif;
+            }
+            #logout-btn{
+                text-align: center;
+                margin: auto;
+                display: flex;
+                justify-self: center;
+            }
+            #fa{
+                color: white;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="containerr">
+            <h3 id="logoutid1">You have been logged out!!</h3>
+            <div>
+                <button class="btn btn-primary" id="logout-btn"><a id="fa" href="{% url 'login' %}">LOGIN</a></button>
+
+            </div>
+        </div>
+    </body>
+    </html>
+    {% endblock content %}

@@ -1,0 +1,284 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stack Overflow - Where Developers Learn, Share, &amp; Build Careers</title>
+    <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=ec617d715196">
+    <link rel="apple-touch-icon" href="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="image_src" href="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="assets/css/main.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+
+</head>
+<body>
+
+<header>
+
+<div class="nav-container">
+    <nav>
+        <div class="nav-brand">
+            <div class="hamburger-menu-container">
+
+                <div class="hamburger-menu">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="current-link">Home</a>
+                    <h5>Public</h5>
+                    <ul class="nav-ul">
+                        <li class="nav-item">
+                            <i class="fas fa-globe-europe"></i>
+                            <a href="" class="nav-link">Stack Overflow</a>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
+                    </ul>
+                    <h5>Find a Job</h5>
+                    <ul class="nav-ul">
+                        <li class="nav-item"><a href="#" class="nav-link">Jobs</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Companies</a></li>
+                    </ul>
+                    <h5>Teams <a href="#" >What's this ?</a></h5>
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Free 30 Day Trial</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="" class="nav-icon">
+                <i class="fab fa-stack-overflow"></i>
+                <a href="{% url 'stackbase:home' %}" style="text-decoration: none; color: black;"><div class="nav-icon-text">stack <span class="nav-bold-text">overflow</span></a>
+                <!-- <div class="nav-icon-text">stack <span class="nav-bold-text">overflow</span> -->
+
+                
+                </div>
+            </a>
+        </div>
+        <div class="nav-base-links">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">For Teams</a></li>
+            </ul>
+        </div>
+        <div class="nav-search">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <form action="" method="GET">
+                    <input type="text" id="" name="search-area" placeholder="Search...">
+                    <button type="submit" style="margin-left: 340px; border-radius: 25px; border: none; padding: 8px;">Search</button>
+                </form>
+            </div>
+            <div class="search-hints">
+                <div class="search-arrow-up"></div>
+                <div class="search-hint-body">
+                    <div class="hints-grid-column">
+                        <div class="hint-text"><span>[tag] </span> search within a tag</div>
+                        <div class="hint-text"><span>user:1234 </span>  search by author</div>
+                        <div class="hint-text"><span>"words here"</span> exact phrase </div>
+                    </div>
+                    <div class="hints-grid-column">
+                        <div class="hint-text"><span>answers:0</span> unanswered questions</div>
+                        <div class="hint-text"><span> score:3  </span> posts with a 3+ score</div>
+                    </div>
+                </div>
+                <div class="search-hint-footer">
+                    <a href="#" class="btn">Ask a question</a>
+                    <a href="#" class="search-help">Search help</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="nav-right-buttons">
+            <div class="search-btn">
+                <i class="fas fa-search"></i>
+            </div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'login' %}" class="btn btn-login">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-register">Logout</a> 
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-login">Log in</a>
+                <a href="{% url 'register' %}" class="btn btn-register">Sign up</a> 
+            {% endif %}
+        </div>
+    </nav>
+</div>
+<!-- <h1 style="font-size: 20px;">hello</h1> -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        <h4 style="text-align: center;">{{ message }}</h4>
+      </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+
+        
+</header>
+
+<!-- Add block content here -->
+<!-- Add enbdblock content here -->
+
+{% block content %}
+
+{% endblock content %}
+
+<section class="jobs">
+    <div class="container">
+
+        <div class="jobs-content">
+            <h3 class="jobs-title">Looking for a job?</h3>
+            <div class="jobs-body">
+                    <div class="jobs-items">
+                        <div class="column">
+                            <div class="jobs-item">
+                                <img src="https://cdn.sstatic.net/Img/home/jobs-tech.svg?v=42f011c01763" alt="" class="jobs-item-img">
+                                <p class="jobs-item-description">Browse jobs by technology</p>
+                            </div>
+                            <div class="jobs-item">
+                                <img src="https://cdn.sstatic.net/Img/home/jobs-salary.svg?v=401840ff8931" alt="" class="jobs-item-img">
+                                <p class="jobs-item-description">Browse jobs by salary</p>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="jobs-item">
+                                <img src="https://cdn.sstatic.net/Img/home/jobs-visa.svg?v=1f3acc6dc772" alt="" class="jobs-item-img">
+                                <p class="jobs-item-description">Browse jobs by visa sponsorship</p>
+                            </div>
+                            <div class="jobs-item">
+                                <img src="https://cdn.sstatic.net/Img/home/jobs-remote.svg?v=a4b4d1b5a80c" alt="" class="jobs-item-img">
+                                <p class="jobs-item-description">Browse remote-friendly jobs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jobs-btn">
+                        <div class="btn btn-orange jobs-btn">View all jobs</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <img src="https://cdn.sstatic.net/Img/home/robot.svg?v=dfa16a330cbd" alt="" class="footer-robot-img">
+<div class="container">
+    <div class="footer-content">
+        <div class="footer-icon">
+            <i class="fab fa-stack-overflow"></i>
+        </div>
+        <div class="footer-nav">
+            <div class="footer-nav-col">
+                <div class="footer-links-title"><a href="#">Stack Overflow</a></div>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">Questions</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Jobs</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Developer Jobs Directory</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Salary Calculator</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Help</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Mobile</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Disable Responsiveness</a></li>
+                </ul>
+            </div>
+            <div class="footer-nav-col">
+                <div class="footer-links-title"><a href="#">Products</a></div>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">Teams</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Talent</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Advertising</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Enterprise</a></li>
+                </ul>
+            </div>
+            <div class="footer-nav-col">
+                <div class="footer-links-title"><a href="#">Company</a></div>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">About</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Press</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Work Here</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Legal</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-nav-col">
+                <div class="footer-links-title"><a href="#">Stack Exchange Network</a></div>
+                <ul class="footer-links">
+                    <li class="footer-link-item">
+                        <a href="#" class="footer-link">Technology</a>
+                        <div class="footer-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                    <li class="footer-link-item">
+                        <a href="#" class="footer-link">Life / Arts</a>
+                        <div class="footer-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </div></li>
+                    <li class="footer-link-item">
+                        <a href="#" class="footer-link">Culture / Recreation</a>
+                        <div class="footer-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                    <li class="footer-link-item">
+                        <a href="#" class="footer-link">Science</a>
+                        <div class="footer-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                    <li class="footer-link-item">
+                        <a href="#" class="footer-link">Other</a>
+                        <div class="footer-arrow-icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-another-links">
+            <div class="social-media">
+                <ul>
+                    <li>
+                        <a href="#">Blog</a>
+                    </li>
+                    <li>
+                        <a href="#">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#">LinkedIn</a>
+                    </li>
+                    <li>
+                        <a href="#">Instagram</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <p>site design / logo © 2020 Stack Exchange Inc; user contributions licensed under <a href="https://stackoverflow.com/help/licensing">cc by-sa</a>. rev 2020.10.2.37725</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+</footer>
+
+<!-- <script src="assets/js/main.js"></script> -->
+<script src="{% static 'main.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+</body>
+</html>
